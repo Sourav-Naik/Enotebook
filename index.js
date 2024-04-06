@@ -24,7 +24,7 @@ app.get("*", (req, res) => {
 const imageData = "";
 
 // File path for the new image file
-const filePath = path.join(process.cwd(), "Profile", "profile.jpg");
+const filePath = 'profile.jpg';
 
 // Writing content to the file
 fs.writeFile(filePath, imageData, (err) => {

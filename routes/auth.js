@@ -10,12 +10,10 @@ import path from "path";
 
 const Router = express.Router();
 
-const Profile = path.join(process.cwd(), "Profile");
-
 // Configure Multer for file upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, Profile);
+    cb(null, process.cwd());
   },
   filename: function (req, file, cb) {
     cb(null, "profile.jpg");
@@ -48,8 +46,10 @@ Router.post(
 
       const { email, name, password } = req.body;
       const uploadedPic = req.file
-        ? fs.readFileSync(path.join(Profile, "profile.jpg"))
-        : fs.readFileSync(path.join(Profile, "defaultProfilePic.jpg"));
+        ? fs.readFileSync(path.join(process.cwd(), "profile.jpg"))
+        : fs.readFileSync(
+            path.join(process.cwd(), "Profile", "defaultProfilePic.jpg")
+          );
 
       // Check if user with email exists
       const existingUser = await User.findOne({ email });
@@ -170,10 +170,10 @@ Router.post(
         newUserName.name = name;
       }
       if (req.file) {
-        const uploadedPic = await fs.readFileSync(
-          path.join(Profile, "profile.jpg")
+        const uploadedPic = fs.readFileSync(
+          path.join(process.cwd(), "profile.jpg")
         );
-        newUserName.imageBuffer = await uploadedPic.toString("base64");
+        newUserName.imageBuffer = uploadedPic.toString("base64");
       }
       let user = await User.findByIdAndUpdate(
         req.userData,
