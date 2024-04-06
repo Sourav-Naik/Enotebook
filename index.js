@@ -4,7 +4,7 @@ import path from "path";
 import dotenv from "dotenv";
 import auth from "./routes/auth.js";
 import notes from "./routes/notes.js";
-
+import fs from "fs";
 const app = express();
 app.use(express.json());
 
@@ -20,7 +20,9 @@ app.use(express.static(path.join(process.cwd(), "build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(process.cwd(), "build", "index.html"));
 });
-
+console.log(
+  fs.readFileSync(path.join(process.cwd(), "Profile", "profile.jpg"))
+);
 // Start the server
 mongoose
   .connect(process.env.Mongo)
