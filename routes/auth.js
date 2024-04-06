@@ -163,15 +163,17 @@ Router.post(
   FetchUser,
   async (req, res) => {
     try {
-      /*---------------------------finding and updating the note-----------------------------------*/
+      /*---------------------------finding and updating the user-----------------------------------*/
       const { name } = req.body;
       const newUserName = {};
       if (name) {
         newUserName.name = name;
       }
       if (req.file) {
-        const uploadedPic = fs.readFileSync(path.join(Profile, "profile.jpg"));
-        newUserName.imageBuffer = uploadedPic.toString("base64");
+        const uploadedPic = await fs.readFileSync(
+          path.join(Profile, "profile.jpg")
+        );
+        newUserName.imageBuffer = await uploadedPic.toString("base64");
       }
       let user = await User.findByIdAndUpdate(
         req.userData,
