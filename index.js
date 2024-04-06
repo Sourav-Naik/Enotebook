@@ -20,9 +20,21 @@ app.use(express.static(path.join(process.cwd(), "build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(process.cwd(), "build", "index.html"));
 });
-console.log(
-  fs.readFileSync(path.join(process.cwd(), "Profile", "profile.jpg"))
-);
+
+const imageData = "";
+
+// File path for the new image file
+const filePath = path.join(process.cwd(), "Profile", "profile.jpg");
+
+// Writing content to the file
+fs.writeFile(filePath, imageData, (err) => {
+  if (err) {
+    console.error("Error creating file:", err);
+    return;
+  }
+  console.log("Image file created successfully!");
+});
+
 // Start the server
 mongoose
   .connect(process.env.Mongo)
