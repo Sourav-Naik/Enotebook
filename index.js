@@ -6,6 +6,7 @@ import auth from "./routes/auth.js";
 import notes from "./routes/notes.js";
 import fs from "fs";
 const app = express();
+
 app.use(express.json());
 
 dotenv.config();
@@ -21,13 +22,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(process.cwd(), "build", "index.html"));
 });
 
-const imageData = "";
-
-// File path for the new image file
-const filePath = 'profile.jpg';
-
-// Writing content to the file
-fs.writeFile(filePath, imageData, (err) => {
+// creating image file to store profile pic data
+fs.writeFile("profile.jpg", "", (err) => {
   if (err) {
     console.error("Error creating file:", err);
     return;
