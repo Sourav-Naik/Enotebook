@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 import auth from "./routes/auth.js";
 import notes from "./routes/notes.js";
 import fs from "fs";
-const app = express();
 
+const app = express();
 app.use(express.json());
 
 dotenv.config();
@@ -37,8 +37,8 @@ mongoose
   .then(() => {
     console.log("Connected to the database");
     // Start the server
-    app.listen(process.env.port || 5000, async () => {
-      console.log(`Server is running on port ${process.env.port || 5000}`);
+    app.listen(process.env.port || 8000, async () => {
+      console.log(`Server is running on port ${process.env.port || 8000}`);
     });
   })
   .catch((err) => {
