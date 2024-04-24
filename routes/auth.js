@@ -22,8 +22,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-//---------------------------------------route 1---------------------------------------
-//-----------create a user using Router.post------auth/createuser----------------------
+//--------------------------------------route 1-----------------------------------------
+//----------create a user using Router.post------auth/createuser------------------------
 Router.post(
   "/createuser",
   [
@@ -65,11 +65,9 @@ Router.post(
       }
 
       //setting profilepic
-      const uploadedPic = req.file
-        ? fs.readFileSync(path.join(process.cwd(), "profile.jpg"))
-        : fs.readFileSync(
-            path.join(process.cwd(), "Profile", "defaultProfilePic.jpg")
-          );
+      const uploadedPic = fs.readFileSync(
+        path.join(process.cwd(), "profile.jpg")
+      );
 
       // Hash password
       const salt = await bcrypt.genSalt(10);
@@ -91,8 +89,8 @@ Router.post(
   }
 );
 
-//---------------------------------------route 2---------------------------------------
-//-----------login token generator using Router.post------auth/login-------------------
+//--------------------------------------route 2-----------------------------------------
+//-----------login token generator using Router.post------auth/login--------------------
 Router.post(
   "/login",
   [
@@ -108,7 +106,6 @@ Router.post(
         email = googleCredentail.email;
         password = googleCredentail.sub + process.env.secret;
       }
-
       // Check for validation errors
       if (googleLogin === false) {
         const errors = validationResult(req);
@@ -153,8 +150,8 @@ Router.post(
   }
 );
 
-//---------------------------------------route 3---------------------------------------
-//-----------Get loggedin user details using Router.post------auth/getuser-------------
+//--------------------------------------route 3-----------------------------------------
+//-----------Get loggedin user details using Router.post------auth/getuser--------------
 Router.post("/getuser", FetchUser, async (req, res) => {
   try {
     let userId = req.userData;
@@ -171,8 +168,8 @@ Router.post("/getuser", FetchUser, async (req, res) => {
   }
 });
 
-// ------------------------------------------route 4----------------------------------
-// ------------------------------------------updateUser-------------------------------
+// -------------------------------------route 4-----------------------------------------
+// -------------------------------------updateUser---------------------------------------
 Router.post(
   "/updateuser",
   upload.single("image"),
@@ -207,8 +204,8 @@ Router.post(
   }
 );
 
-// ----------------------------------route 5------------------------------------------
-// ------------------------------forgot password--------------------------------------
+// -------------------------------------route 5-----------------------------------------
+// ------------------------------forgot password----------------------------------------
 Router.post("/forgotpassword", async (req, res) => {
   const client = new SMTPClient({
     user: process.env.user,
